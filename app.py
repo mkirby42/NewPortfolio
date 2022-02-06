@@ -1,11 +1,13 @@
+
 # %%
-from pages import posts
 from jupyter_dash import JupyterDash
 import dash
 import dash_core_components as dcc
 import dash_html_components as html
 import dash_bootstrap_components as dbc
 from dash.dependencies import Input, Output
+
+from pages import posts, bio
 
 # %%
 app = JupyterDash(
@@ -20,32 +22,6 @@ app = JupyterDash(
     ]
 )
 
-# %%
-bio = html.Div([
-    dbc.Row([
-        dbc.Col([
-            html.Img(
-                src=app.get_asset_url('mypic.jpg'),
-                style={'width': "230px", 'height': '308px'}
-            )
-        ]),
-        dbc.Col([
-            html.H3(
-                "Matt Kirby"
-            ),
-            html.P(
-                """
-                Matt is a Data Scientist and Engineer at Organic Robotics Coporation where he is 
-                developing the next generation of wearable sensing technology to 
-                revolutionize sports, medicine, and society.
-                """
-            )
-        ]),
-        dbc.Col([
-
-        ])
-    ])
-])
 
 # %%
 SIDEBAR_STYLE = {
@@ -57,11 +33,14 @@ SIDEBAR_STYLE = {
     "padding": "2rem 1rem",
     "background-color": "#f8f9fa",
 }
+
 CONTENT_STYLE = {
     "margin-left": "18rem",
     "margin-right": "2rem",
     "padding": "2rem 1rem",
 }
+
+# %%
 sidebar = html.Div(
     [
         dbc.Nav(
@@ -98,6 +77,14 @@ app.layout = html.Div([
 ])
 
 # %%
+image_scale = 0.43
+featured = html.Div([
+    html.Img(
+        src=app.get_asset_url('missle_row.jpg'),
+        style={'width': f"{1994 * image_scale}px",
+               'height': f'{1326 * image_scale}px'}
+    )
+])
 
 # %%
 
@@ -106,20 +93,17 @@ app.layout = html.Div([
               Input('location', 'pathname'))
 def display_content(pathname):
     if pathname == "/":
-        return html.Div([])
+        return featured
     elif pathname == "/essays":
         return posts.layout
     elif pathname == "/bio":
-        return bio
+        return bio.layout
     else:
         return dcc.Markdown('## Page not found')
 
 
 # %%
 server = app.server
-
-# %%
-# app.run_server(mode='external')
 
 # %%
 if __name__ == '__main__':
