@@ -81,8 +81,8 @@ image_scale = 0.43
 featured = html.Div([
     html.Img(
         src=app.get_asset_url('missle_row.jpg'),
-        style={'width': f"{1994 * image_scale}px",
-               'height': f'{1326 * image_scale}px'}
+        style={'width': "857px",
+               'height': '570px'}
     )
 ])
 
