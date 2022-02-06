@@ -7,7 +7,7 @@ import dash_html_components as html
 import dash_bootstrap_components as dbc
 from dash.dependencies import Input, Output
 
-from pages import posts, bio
+from pages import posts
 
 # %%
 app = JupyterDash(
@@ -77,13 +77,39 @@ app.layout = html.Div([
 ])
 
 # %%
-image_scale = 0.43
 featured = html.Div([
     html.Img(
         src=app.get_asset_url('missle_row.jpg'),
         style={'width': "857px",
                'height': '570px'}
     )
+])
+
+# %%
+bio = html.Div([
+    dbc.Row([
+        dbc.Col([
+            html.Img(
+                src=app.get_asset_url('mypic.jpg'),
+                style={'width': "230px", 'height': '308px'}
+            )
+        ]),
+        dbc.Col([
+            html.H3(
+                "Matt Kirby"
+            ),
+            html.P(
+                """
+                Matt is a Data Scientist and Engineer at Organic Robotics Coporation where he is 
+                developing the next generation of wearable sensing technology to 
+                revolutionize sports, medicine, and society.
+                """
+            )
+        ]),
+        dbc.Col([
+
+        ])
+    ])
 ])
 
 # %%
@@ -97,7 +123,7 @@ def display_content(pathname):
     elif pathname == "/essays":
         return posts.layout
     elif pathname == "/bio":
-        return bio.layout
+        return bio
     else:
         return dcc.Markdown('## Page not found')
 
